@@ -9,7 +9,7 @@ public class DocumentoDAO {
 
 //Crear documento
 	public void CrearDocumento(String id_documento, String titulo, String descripcion, String id_autor, int anio, String tipo_de_documento, String formato, String id_coleccion, String fecha_de_subida) {
-		ConexionMySQL conexion = new ConexionMySQL("root", "", "aetashistoria");
+		ConexionMySQL conexion = new ConexionMySQL("root", "", "aetasHistoria");
 
 		try {
 			conexion.conectar();
@@ -33,7 +33,6 @@ public class DocumentoDAO {
 			conexion.ejecutarSelect(sentencia2);
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
