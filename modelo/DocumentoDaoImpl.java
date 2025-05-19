@@ -10,7 +10,7 @@ public class DocumentoDaoImpl implements DocumentoDao{
 //Crear documento
 	@Override
 	public void createArchive(Documento doc) {
-		ConexionMySQL conexion = new ConexionMySQL("root", "", "aetashistoria");
+		ConexionMySQL conexion = new ConexionMySQL("root", "", "aetas_historia");
 
 		try {
 			conexion.conectar();
@@ -30,7 +30,7 @@ public class DocumentoDaoImpl implements DocumentoDao{
 	public Documento readArchiveById(int id_documento) {
 		Documento documento= null;
 		try {
-			ConexionMySQL conexion = new ConexionMySQL("root", "", "aetashistoria");
+			ConexionMySQL conexion = new ConexionMySQL("root", "", "aetas_historia");
 			conexion.conectar();
 			// Seleccionamos documentos por ID
 			String sentencia2 = "SELECT * FROM documento WHERE id_documento= ?";
@@ -49,7 +49,7 @@ public class DocumentoDaoImpl implements DocumentoDao{
 		List<Documento> documentos = new ArrayList<>();
 		String sentencia3 = "SELECT * FROM documento";
 		try {
-			ConexionMySQL conexion = new ConexionMySQL("root", "", "aetashistoria");
+			ConexionMySQL conexion = new ConexionMySQL("root", "", "aetas_historia");
 			conexion.conectar();
 			conexion.ejecutarSelect(sentencia3);
 		} catch (SQLException e) {
@@ -69,7 +69,7 @@ public class DocumentoDaoImpl implements DocumentoDao{
 		        "id_coleccion = " + archive.getIdColeccion() + " " +
 		        "WHERE id_documento = '" + archive.getId() + "'";
 		try {
-			ConexionMySQL conexion = new ConexionMySQL("root", "", "aetas-historia");
+			ConexionMySQL conexion = new ConexionMySQL("root", "", "aetas_historia");
 			conexion.conectar();
 			conexion.ejecutarInsertDeleteUpdate(sentencia4);
 		} catch (SQLException e) {
@@ -82,7 +82,7 @@ public class DocumentoDaoImpl implements DocumentoDao{
 	public void deleteArchive(int id_documento) {
 		String sentencia5 = "DELETE * FROM documento WHERE id_documento = ?";
 		try {
-			ConexionMySQL conexion = new ConexionMySQL("root", "", "aetas-historia");
+			ConexionMySQL conexion = new ConexionMySQL("root", "", "aetas_historia");
 			conexion.conectar();
 			conexion.ejecutarInsertDeleteUpdate(sentencia5);
 		} catch (SQLException e) {
