@@ -4,7 +4,7 @@
 /**
  * 
  */
-module aetas_historia {
+module Conexion {
 	requires java.desktop;
 	requires java.sql;
 }

@@ -1,116 +1,158 @@
+// src/modelo/ConexionMySQL.java
 package modelo;
 
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Calendar;
-import java.util.TimeZone;
-
-/**
- * Clase para la conexión con una base de datos MySQL
- *
- * @author Francisco Jesús Delgado Almirón
- */
 public class ConexionMySQL {
+    private Connection conexion;
 
-    // Base de datos a la que nos conectamos
-    private String BD;
-    // Usuario de la base de datos
-    private String USUARIO;
-    // Contraseña del usuario de la base de datos
-    private String PASS;
-    // Objeto donde se almacenará nuestra conexión
-    private Connection connection;
-    // Indica que está en localhost
-    private String HOST;
-    // Zona horaria
-    private TimeZone zonahoraria;
-
-    /**
-     * Constructor de la clase
-     *
-     * @param usuario Usuario de la base de datos
-     * @param pass Contraseña del usuario
-     * @param bd Base de datos a la que nos conectamos
-     */
-    public ConexionMySQL(String usuario, String pass, String bd) {
-        HOST = "localhost";
-        USUARIO = usuario;
-        PASS = pass;
-        BD = bd;
-        connection = null;
-    }
-
-    /**
-     * Comprueba que el driver de MySQL esté correctamente integrado
-     *
-     * @throws SQLException Se lanzará cuando haya un fallo con la base de datos
-     */
-    private void registrarDriver() throws SQLException {
+    public ConexionMySQL(String host, String port, String user, String pass, String bd) {
+        String url = "jdbc:mysql://" + host + ":" + port
+            + "/" + bd + "?useSSL=false&serverTimezone=UTC";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new SQLException("Error al conectar con MySQL: " + e.getMessage());
+            this.conexion = DriverManager.getConnection(url, user, pass);
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.conexion = null;
         }
     }
 
-    /**
-     * Conecta con la base de datos
-     *
-     * @throws SQLException Se lanzará cuando haya un fallo con la base de datos
-     */
-    public void conectar() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            registrarDriver();
-            // Obtengo la zona horaria
-            Calendar now = Calendar.getInstance();
-            zonahoraria = now.getTimeZone();
-            connection = (Connection) DriverManager.getConnection("jdbc:mysql://" + HOST + "/" + BD + "?user="
-                    + USUARIO + "&password=" + PASS + "&useLegacyDatetimeCode=false&serverTimezone="
-                    + zonahoraria.getID());
+    public boolean success() {
+        return this.conexion != null;
+    }
+
+    public boolean userExist(String username) {
+        String SQL = "SELECT nombre FROM usuario WHERE nombre = ?";
+        try (PreparedStatement stmt = conexion.prepareStatement(SQL)) {
+            stmt.setString(1, username);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
-    /**
-     * Cierra la conexión con la base de datos
-     *
-     * @throws SQLException Se lanzará cuando haya un fallo con la base de datos
-     */
-    public void desconectar() throws SQLException {
-        if (connection != null && !connection.isClosed()) {
-            connection.close();
+    public boolean register(String nombre, String email, String contraseña) {
+        String SQL = """
+            INSERT INTO usuario(
+              nombre, email, tipo_de_usuario_id_tipo_de_usuario, contraseña
+            ) VALUES (?, ?, 2, ?)
+            """;
+        try (PreparedStatement stmt = conexion.prepareStatement(SQL)) {
+            stmt.setString(1, nombre);
+            stmt.setString(2, email);
+            stmt.setString(3, contraseña);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
-    /**
-     * Ejecuta una consulta SELECT
-     *
-     * @param consulta Consulta SELECT a ejecutar
-     * @return Resultado de la consulta
-     * @throws SQLException Se lanzará cuando haya un fallo con la base de datos
-     */
-    public ResultSet ejecutarSelect(String consulta) throws SQLException {
-        Statement stmt = connection.createStatement();
-        ResultSet rset = stmt.executeQuery(consulta);
+    public boolean añadirDocumento(
+        String titulo,
+        String descripcion,
+        String autor,
+        int anio,
+        String formato,
+        String coleccion,
+        String fechaDeSubida,
+        String imagenPath
+    ) {
+        String SQL = """
+            INSERT INTO documento(
+              titulo, descripcion, autor, anio,
+              formato, coleccion, fecha_de_subida, imagen
+            ) VALUES (?,?,?,?,?,?,?,?)
+            """;
+        try (PreparedStatement stmt = conexion.prepareStatement(SQL)) {
+            stmt.setString(1, titulo);
+            stmt.setString(2, descripcion);
+            stmt.setString(3, autor);
+            stmt.setInt   (4, anio);
+            stmt.setString(5, formato);
+            stmt.setString(6, coleccion);
+            stmt.setString(7, fechaDeSubida);
+            stmt.setString(8, imagenPath);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-        return rset;
+    public List<DocumentFullData> getAllDocuments() {
+        List<DocumentFullData> docs = new ArrayList<>();
+        String SQL = "SELECT titulo, descripcion, autor, anio, formato, coleccion, fecha_de_subida, imagen "
+                   + "FROM documento ORDER BY id_Documento";
+        try (PreparedStatement stmt = conexion.prepareStatement(SQL);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                docs.add(new DocumentFullData(
+                  rs.getString("titulo"),
+                  rs.getString("descripcion"),
+                  rs.getString("autor"),
+                  rs.getInt   ("anio"),
+                  rs.getString("formato"),
+                  rs.getString("coleccion"),
+                  rs.getString("fecha_de_subida"),
+                  rs.getString("imagen")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return docs;
+    }
+
+    public DocumentFullData getDocumentByTitle(String titulo) {
+        String SQL = """
+            SELECT titulo, descripcion, autor, anio, formato, coleccion, fecha_de_subida, imagen
+            FROM documento
+            WHERE titulo = ?
+            """;
+        try (PreparedStatement stmt = conexion.prepareStatement(SQL)) {
+            stmt.setString(1, titulo);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new DocumentFullData(
+                      rs.getString("titulo"),
+                      rs.getString("descripcion"),
+                      rs.getString("autor"),
+                      rs.getInt   ("anio"),
+                      rs.getString("formato"),
+                      rs.getString("coleccion"),
+                      rs.getString("fecha_de_subida"),
+                      rs.getString("imagen")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
-     * Ejecuta una consulta INSERT, DELETE o UPDATE
-     *
-     * @param consulta Consulta INSERT, DELETE o UPDATE a ejecutar
-     * @return Cantidad de filas afectadas
-     * @throws SQLException Se lanzará cuando haya un fallo con la base de datos
+     * Verifica usuario + contraseña en la tabla `usuario`.
+     * Devuelve true si la combinación existe.
      */
-    public int ejecutarInsertDeleteUpdate(String consulta) throws SQLException {
-        Statement stmt = connection.createStatement();
-        int fila = stmt.executeUpdate(consulta);
-
-        return fila;
+    public boolean logging(String username, String password) {
+        String SQL = "SELECT nombre FROM usuario WHERE nombre = ? AND contraseña = ?";
+        try (PreparedStatement stmt = conexion.prepareStatement(SQL)) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
