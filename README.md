@@ -1,4 +1,4 @@
-<!-- HEADER CON ANIMACIÓN -->
+<!-- CABECERA ANIMADA -->
 
 <p align="center">
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=26&pause=1000&color=6A5ACD&center=true&width=600&lines=%F0%9F%8F%9B%EF%B8%8F+AETAS+HISTORIA+-+Archivo+Hist%C3%B3rico+Digital" alt="Typing SVG" />
@@ -12,6 +12,18 @@
 </p>
 
 ---
+
+<pre>
+   __
+  (`/\
+  `=\/\ __...--~~~~~-._   _.-~~~~~--...__
+   `=\/\               \ /               \\
+    `=\/                V                 \\
+    //_\___--~~~~~~-._  |  _.-~~~~~~--...__\\
+   //  ) (..----~~~~._\ | /_.~~~~----.....__\\
+  ===( INK )==========\\|//====================
+__ejm\___/________dwb`---`____________________________________________
+</pre>
 
 > 💬 *"Rescatando el pasado, digitalizando el futuro."*
 
@@ -39,13 +51,13 @@
 
 ## ⚙️ Tecnologías
 
-| 💡 Tecnología     | 🧩 Descripción                    |
-|------------------|----------------------------------|
-| Lenguaje         | Java, PL/SQL                     |
-| Base de Datos    | MySQL 8.x                        |
-| IDE              | Eclipse                          |
-| JDBC Driver      | MySQL Connector/J                |
-| Control de versiones | Git                         |
+| 💡 Tecnología           | 🧩 Descripción                    |
+|-------------------------|----------------------------------|
+| 💻 Lenguaje              | Java, PL/SQL                     |
+| 🗄️ Base de Datos         | MySQL 8.x                        |
+| 🧠 IDE                   | Eclipse                          |
+| 🔌 JDBC Driver           | MySQL Connector/J                |
+| 🌀 Control de versiones  | Git                              |
 
 ---
 
@@ -68,25 +80,25 @@ TIPO_USUARIO
 <details>
 <summary>🧠 <strong>Procedimientos almacenados</strong></summary>
 
-| Procedimiento         | Acción                                  |
-|-----------------------|------------------------------------------|
-| `insertar_documento`  | Añadir documento                         |
-| `actualizar_documento`| Modificar datos existentes               |
-| `eliminar_documento`  | Borrar por ID                            |
-| `listar_documentos`   | Mostrar todos los documentos             |
-| `ver_documento`       | Consultar detalle por ID                 |
+| 📋 Procedimiento         | ⚙️ Función                                  |
+|--------------------------|---------------------------------------------|
+| `insertar_documento`     | Añadir documento                            |
+| `actualizar_documento`   | Modificar datos existentes                  |
+| `eliminar_documento`     | Borrar por ID                               |
+| `listar_documentos`      | Mostrar todos los documentos                |
+| `ver_documento`          | Consultar detalle por ID                    |
 
 </details>
 
 <details>
 <summary>⚙️ <strong>Triggers definidos</strong></summary>
 
-| Trigger                    | Función                                               |
-|----------------------------|--------------------------------------------------------|
-| `registrarActividadInsert`| Registra autor del alta de un documento                |
-| `registrarActividadUpdate`| Guarda cambios realizados                              |
-| `registrarActividadDelete`| Registra la eliminación de documentos                  |
-| `caracteresInválidos`     | Previene la inserción de caracteres no válidos         |
+| 🔄 Trigger                 | 🔍 Función                                                 |
+|---------------------------|------------------------------------------------------------|
+| `registrarActividadInsert`| Registra quién insertó el documento                        |
+| `registrarActividadUpdate`| Guarda qué se modificó y cuándo                            |
+| `registrarActividadDelete`| Registra quién lo eliminó                                  |
+| `caracteresInválidos`     | Impide caracteres prohibidos en la inserción               |
 
 </details>
 
@@ -94,8 +106,8 @@ TIPO_USUARIO
 
 ## 🧪 Configuración del entorno
 
-1. Instala **MySQL Server 8.x**.
-2. Crea la base de datos:
+1. Instala **MySQL Server 8.x**
+2. Crea la base de datos y el usuario:
 
 ```sql
 CREATE DATABASE aetas_historia;
@@ -104,7 +116,7 @@ CREATE USER 'aetas_user'@'localhost' IDENTIFIED BY 'tu_contraseña';
 GRANT ALL PRIVILEGES ON aetas_historia.* TO 'aetas_user'@'localhost';
 ```
 
-3. Ejecuta el script `estructura.sql` para las tablas y lógica.
+3. Ejecuta el script `estructura.sql` para generar todas las tablas.
 
 ---
 
@@ -136,6 +148,17 @@ Distribuido bajo la licencia **MIT**.
 Consulta el archivo [`LICENSE`](./LICENSE) para más información.
 
 ---
+
+<pre>
+            .--.           .---.        .-.
+         .---|--|   .-.     | A |  .---. |~|    .--.
+      .--|===|Ch|---|_|--.__| S |--|:::| |~|-==-|==|---.
+      |%%|NT2|oc|===| |~~|%%| C |--|   |_|~|CATS|  |___|-.
+      |  |   |ah|===| |==|  | I |  |:::|=| |    |GB|---|=|
+      |  |   |ol|   |_|__|  | I |__|   | | |    |  |___| |
+      |~~|===|--|===|~|~~|%%|~~~|--|:::|=|~|----|==|---|=|
+hjw   ^--^---'--^---^-^--^--^---'--^---^-^-^-==-^--^---^-'
+</pre>
 
 <p align="center">
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=F59E0B&center=true&width=440&lines=AETAS+HISTORIA+es+historia+viva.;Explora+%F0%9F%94%8D.+Conserva+%F0%9F%93%85.+Comparte+%F0%9F%92%AC." alt="Typing SVG">
