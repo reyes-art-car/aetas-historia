@@ -1,93 +1,142 @@
-# 🏛️ Aetas Historia - Archivo Histórico Digital
+<!-- HEADER CON ANIMACIÓN -->
 
-![License](https://img.shields.io/badge/license-MIT-blue)
-![Status](https://img.shields.io/badge/status-Actively--Maintained-brightgreen)
-![MySQL](https://img.shields.io/badge/DB-MySQL%208.x-blue)
-![Java](https://img.shields.io/badge/language-Java-yellow)
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=26&pause=1000&color=6A5ACD&center=true&width=600&lines=%F0%9F%8F%9B%EF%B8%8F+AETAS+HISTORIA+-+Archivo+Hist%C3%B3rico+Digital" alt="Typing SVG" />
+</p>
 
-> _"Rescatando el pasado, digitalizando el futuro."_
-
----
-
-## 📖 Descripción
-
-**Aetas Historia** es un archivo histórico digital que permite **conservar, digitalizar, consultar y organizar archivos históricos**.  
-Gestión de autores, colecciones, épocas históricas y diferentes tipos de usuarios.
-
-📜 El nombre del proyecto proviene del latín:
-
-- **aetas** → _edad o época_  
-- **historia** → temática central de la aplicación
+<p align="center">
+  <img src="https://img.shields.io/badge/license-MIT-blueviolet?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/status-Activo-brightgreen?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/basedatos-MySQL%208.x-blue?style=for-the-badge&logo=mysql"/>
+  <img src="https://img.shields.io/badge/lenguaje-Java-yellow?style=for-the-badge&logo=java"/>
+</p>
 
 ---
 
-## 🎯 Funcionalidades principales
-
-- 🔍 Consultar archivos históricos por filtros (colección, autor, época)
-- 🛠️ Administración de documentos (subida, edición, eliminación)
-- 📁 Búsqueda avanzada para investigadores
-- 🔐 Acceso restringido para visitantes con permisos limitados
+> 💬 *"Rescatando el pasado, digitalizando el futuro."*
 
 ---
 
-## 🛠️ Tecnologías utilizadas
+## 🧭 Sobre el proyecto
 
-| Categoría        | Herramienta                        |
-|------------------|------------------------------------|
-| 🔤 Lenguaje       | Java, PL/SQL                       |
-| 💾 Base de Datos | MySQL 8.x                          |
-| 🧩 Driver JDBC    | MySQL Connector/J                  |
-| 🧠 IDE           | Eclipse                            |
-| 🔄 Control       | Git                                |
+**Aetas Historia** es un archivo histórico digital que permite **consultar, conservar y organizar documentos históricos** con estructura moderna y flexible.
+
+> 🏺 *Del latín:*  
+> **aetas** = época o edad  
+> **historia** = relato del pasado
 
 ---
 
-## 🗃️ Estructura de la Base de Datos
+## 🔥 Funcionalidades destacadas
 
-📌 Tablas principales:
-
-- `DOCUMENTO`
-- `AUTOR`
-- `COLECCION`
-- `DOCUMENTO_COLECCION`
-- `TIPO_DOCUMENTO`
-- `USUARIO`
-- `TIPO_USUARIO`
-
-📎 Consulta el diseño entidad-relación en: `aetas-historia-ER.drawio`
+✅ Filtros avanzados por colección, autor y época  
+✅ Gestión de documentos: subir, editar, eliminar  
+✅ Módulo de búsqueda para investigadores  
+✅ Acceso con roles: administrador, investigador, visitante  
+✅ Registro automático de actividad y validaciones
 
 ---
 
-## 🧠 Procedimientos y Triggers
+## ⚙️ Tecnologías
 
-### 📄 Procedimientos Almacenados
-
-| Procedimiento          | Descripción                                  |
-|------------------------|----------------------------------------------|
-| `insertar_documento`   | Inserta un nuevo documento                   |
-| `actualizar_documento` | Actualiza datos de un documento existente    |
-| `eliminar_documento`   | Elimina un documento por su ID               |
-| `listar_documentos`    | Devuelve todos los documentos registrados    |
-| `ver_documento`        | Muestra los detalles de un documento por ID  |
-
-### ⚙️ Triggers (Disparadores)
-
-| Trigger                    | Función                                                            |
-|----------------------------|---------------------------------------------------------------------|
-| `registrarActividadInsert`| Registra qué usuario insertó un documento                           |
-| `registrarActividadUpdate`| Guarda la actividad al actualizar documentos                        |
-| `registrarActividadDelete`| Almacena acciones de eliminación de documentos                      |
-| `caracteresInválidos`     | Previene caracteres no válidos antes de insertar un nuevo documento |
+| 💡 Tecnología     | 🧩 Descripción                    |
+|------------------|----------------------------------|
+| Lenguaje         | Java, PL/SQL                     |
+| Base de Datos    | MySQL 8.x                        |
+| IDE              | Eclipse                          |
+| JDBC Driver      | MySQL Connector/J                |
+| Control de versiones | Git                         |
 
 ---
 
-## ⚙️ Configuración del entorno
+## 🗃️ Modelo de Base de Datos
 
-1. Instala **MySQL Server 8.x** y asegúrate de que esté corriendo.
-2. Crea una base de datos llamada `aetas_historia`
-3. Ejecuta el script `estructura.sql` para crear las tablas.
-4. Crea un usuario y asigna permisos:
+```
+DOCUMENTO
+AUTOR
+COLECCION
+DOCUMENTO_COLECCION
+TIPO_DOCUMENTO
+USUARIO
+TIPO_USUARIO
+```
+
+📌 Diagrama entidad-relación: `aetas-historia-ER.drawio`
+
+---
+
+<details>
+<summary>🧠 <strong>Procedimientos almacenados</strong></summary>
+
+| Procedimiento         | Acción                                  |
+|-----------------------|------------------------------------------|
+| `insertar_documento`  | Añadir documento                         |
+| `actualizar_documento`| Modificar datos existentes               |
+| `eliminar_documento`  | Borrar por ID                            |
+| `listar_documentos`   | Mostrar todos los documentos             |
+| `ver_documento`       | Consultar detalle por ID                 |
+
+</details>
+
+<details>
+<summary>⚙️ <strong>Triggers definidos</strong></summary>
+
+| Trigger                    | Función                                               |
+|----------------------------|--------------------------------------------------------|
+| `registrarActividadInsert`| Registra autor del alta de un documento                |
+| `registrarActividadUpdate`| Guarda cambios realizados                              |
+| `registrarActividadDelete`| Registra la eliminación de documentos                  |
+| `caracteresInválidos`     | Previene la inserción de caracteres no válidos         |
+
+</details>
+
+---
+
+## 🧪 Configuración del entorno
+
+1. Instala **MySQL Server 8.x**.
+2. Crea la base de datos:
 
 ```sql
+CREATE DATABASE aetas_historia;
+
 CREATE USER 'aetas_user'@'localhost' IDENTIFIED BY 'tu_contraseña';
 GRANT ALL PRIVILEGES ON aetas_historia.* TO 'aetas_user'@'localhost';
+```
+
+3. Ejecuta el script `estructura.sql` para las tablas y lógica.
+
+---
+
+## 🚀 Cómo ejecutar el proyecto
+
+```bash
+# Clonar el proyecto
+git clone https://github.com/reyes-art-car/aetas-historia.git
+cd aetas-historia
+```
+
+🔧 Abre en **Eclipse**, conecta el driver **MySQL JDBC**  
+🧠 Inicia sesión como el tipo de usuario correspondiente
+
+---
+
+## 👤 Autores
+
+| 👨‍💻 Nombre                      | 📬 Contacto                                       |
+|-------------------------------|--------------------------------------------------|
+| **María Reyes Artacho Carrero** | [mac0045@alu.medac.es](mailto:mac0045@alu.medac.es) |
+| **Ramón Manzano Alonso**        | [rma0020@alu.medac.es](mailto:rma0020@alu.medac.es)  |
+
+---
+
+## 📄 Licencia
+
+Distribuido bajo la licencia **MIT**.  
+Consulta el archivo [`LICENSE`](./LICENSE) para más información.
+
+---
+
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=F59E0B&center=true&width=440&lines=AETAS+HISTORIA+es+historia+viva.;Explora+%F0%9F%94%8D.+Conserva+%F0%9F%93%85.+Comparte+%F0%9F%92%AC." alt="Typing SVG">
+</p>
